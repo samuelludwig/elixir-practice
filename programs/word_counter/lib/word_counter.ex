@@ -17,7 +17,7 @@ defmodule WordCounter do
   @spec get_words(String.t) :: [String.t]
   def get_words(file) do
     File.stream!(file)
-    |> Enum.map(&String.replace(&1, ~r/(\r\n)+|\r+|\n+|\t+[\p{P}\p{S}]+/, ""))
+    |> Enum.map(&String.replace(&1, ~r/[^a-zA-Z-' ]/, ""))
     |> Enum.map(&String.downcase(&1))
     |> Enum.map(&Regex.split(~r/ /, &1))
     |> List.flatten()
