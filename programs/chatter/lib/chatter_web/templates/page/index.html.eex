@@ -1,0 +1,25 @@
+<section class="phx-hero">
+  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
+  <p>A productive web framework that<br/>does not compromise speed or maintainability.</p>
+</section>
+
+<div class="row">
+  <div class="col-md-12">
+    Hello there, <span id="user"><%= @conn.params["user"] %></span>
+  </div>
+
+  <div class="col-md-8">
+    <h3>Messages:</h3>
+    <ul id="messageList" class="list-unstyled">
+
+    </ul>
+    <input type="text" id="newMessage" class="form-control">
+  </div>
+
+  <div class="col-md-4">
+    <h3>Users Online:</h3>
+    <ul id="userList" class="list-unstyled">
+      <li></li>
+    </ul>
+  </div>
+</div>
