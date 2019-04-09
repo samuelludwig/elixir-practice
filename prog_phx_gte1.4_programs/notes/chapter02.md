@@ -4,17 +4,17 @@
 
 ## The Lay of the Land
 
+- Important term - **web server**: Computer that hosts a website on the internet at a specific IP address. It holds a collection of files much like a folder on your OS, the files usually contain data and information on how and when to display that data.
+
 - You can think of any web server as a function.
 
-  - **web server**: computer that hosts a website on the internet at a specific IP address.
-
-- When you search and go to a URL (which is translated to an IP address), think of it as a *function call* to the `webserver` function.
+- When you search and go to a URL (which is translated to a web server's IP address), think of it as a *function call* to the `webserver` function.
 
 - The function takes input (your request) and generates a response.
 
   - ```
     > webserver(request)
-    webserver_response
+    result: webserver_response
     ```
 
 - A web server is a natural problem for a functional language to solve.
@@ -27,7 +27,7 @@
 
     - ```
       > 2 |> inc() |> inc() |> dec()
-      3
+      result: 3
       ```
 
     - The **`|>`**, or *pipe operator* takes the value on the left and passes it as the first argument to the function on the right.
@@ -42,7 +42,7 @@
 
     - ```
       > connection |> phoenix
-      transformed_connection
+      result: transformed_connection
       ```
 
     - The Phoenix program takes the argument `connection` and returns some transformation of that `connection`.
@@ -67,19 +67,23 @@
 
   - What are the 'layers' of Phoenix?
 
-    - Our function `phoenix` we mentioned above is really a composition of many functions (A.K.A. pipelines)
+    - Our function: `phoenix` that we mentioned above is really a composition of many functions (A.K.A. pipelines)
 
-    - Zooming in a level into our `phoenix` function, we can see that it is composed of four main pipelines:
+    - Zooming in a level into our `phoenix` function, we can see that it is composed of four main parts/pipelines:
 
-      - `endpoint`
+      1. `endpoint`
 
-      - `router`
+      2. `router`
 
-      - `pipelines`
+      3. `pipelines`
 
-      - `controller`
+      4. `controller`
 
-      - To fix any immediate confusion; just think of the `pipelines` er... pipeline as "other miscellaneous functions".
+      - To fix any immediate confusion; just think of the `pipelines` er... pipeline, as "other miscellaneous functions" for now.
+
+        
+
+        **So**
 
       - ```
         > connection |> phoenix
@@ -95,4 +99,55 @@
           |> controller()
         ```
 
-        
+  - Lets break these layers down:
+
+    - What is an 'Endpoint'?
+
+      - If we think of a `connection` as the form you fill out at the doctors office, the `endpoint` is the desk clerk you hand it to when you're done.
+      - The `endpoint` is the beginning of your applications world, the hole that incoming connections are tossed into.
+      - Phoenix kindly creates the endpoint automatically for us, and while you can do some nifty things by playing with it yourself, you can largely get away with not touching/worrying about it at all. Understanding how things work beneath the surface is always useful though. 
+
+    - What is a 'Router'?
+
+      - Sticking with our doctors office analogy, after the desk clerk (`endpoint`) receives your form (`connection`), they will hand it to a nurse. The nurse looks at the "Where are you going?" and "What are you doing?" fields, and points you in the right direction as to where to go. The nurse in this analogy is playing the part of the `router`.
+      - The `router` is essentially a giant table/tree of all possible parts of a website you might go to, and when a request comes through an `endpoint`, the `router` will look up where it wants to go in the table, and send it there if the location exists.
+      - A `router` might have a few sub-tables depending on who is accessing the site/server, one my be for an API, or a normal user on a web browser. A possible table could also be for admin accounts on the site, that would have access to unique pages normal users wouldn't be able to get to. 
+      - The `router` is something that you will interface/work with any time you want to add a new page to your site, and is thankfully not too complicated.
+      - A `router` will usually have it's own pipeline that it puts a connection through depending on where it came from, usually something that makes sure that the user is allowed access to wherever it's going, and that everything is 'squared away', i.e. it sets up the browser session so it can keep tabs on everything correctly.
+
+    - What are the 'Pipelines'?
+
+      - As mentioned before, the `pipelines` layer is not as concrete as the others, where the `endpoint` `controller` and `router` are all in separate and distinct files, the `pipelines` are usually spread out and found in different files, as mentioned, one or two may be found in the `router` file.
+      - As for our doctors office, the `pipelines` layer can be considered all the steps taken in-between where staff make sure you're actually a patient of theirs, that you have your appointment scheduled properly, your billing information is correct, that you're seeing the right doctor, that your insurance info is all correct, are you up-to-date on your immunizations, etc.
+      - The `pipelines` generally handle common tasks, like making sure a user is authorized to access a certain part of the site, or that a password is a proper length, or that user credentials get encrypted/stored properly.
+      - You could get away with considering `pipelines` the 'data processing' step in your application, as a loose definition.
+      - To emphasize: `pipelines` are still just normal functions and collections of functions like everything else, they aren't special in any way.
+
+    - What is a 'Controller'?
+
+      - In our doctor's office analogy, after the nurse (`router`) brings you to your room, the good doctor themselves will finally pay you a visit and conduct your examination/check-up. The main event here -the doctor- is our `controller`.
+
+      - As is conveniently evident in our analogy,  once you get to where you need to be, the `controller` is where everything you care about as a user happens; it's a big section.
+
+      - The `controller` is so significant that it warrants a zoom-in of its own:
+
+        ```
+        > connection |> controller
+        ```
+
+        is equivalent to
+
+        ```
+        > connection
+          |> controller()
+          |> common_services()
+          |> action()
+        ```
+
+      - Let's brake these down as simply as possible:
+
+        - `controller`: the beginning of our user experience, the doctor looks over your paperwork and takes note of the "why are you here?" field.
+        - `common_services`: very similar to the `pipelines` layer mentioned above, the doctor performs the routine check-up steps, say 'ahhh...'.
+        - `action`: finally, the thing the user is actually trying to do- make an account, view some data, make a comment, etc, the actual *act* itself happens at this step. To complete our doctors office analogy: perhaps you went to the doctors to get a prescription renewed, at this step, the doctor would confirm that you do indeed still need it, and write you the prescription.
+
+      - `section on action here`
