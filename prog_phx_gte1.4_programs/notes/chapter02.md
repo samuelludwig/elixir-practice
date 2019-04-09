@@ -117,7 +117,7 @@
 
     - What are the 'Pipelines'?
 
-      - As mentioned before, the `pipelines` layer is not as concrete as the others, where the `endpoint` `controller` and `router` are all in separate and distinct files, the `pipelines` are usually spread out and found in different files, as mentioned, one or two may be found in the `router` file.
+      - As mentioned before, the `pipelines` layer is not as concrete as the others, where the `endpoint` `controller` and `router` are all in separate and distinct files, the `pipelines` are usually spread out and found in different files- as we just said, one or two may be found in the `router` file.
       - As for our doctors office, the `pipelines` layer can be considered all the steps taken in-between where staff make sure you're actually a patient of theirs, that you have your appointment scheduled properly, your billing information is correct, that you're seeing the right doctor, that your insurance info is all correct, are you up-to-date on your immunizations, etc.
       - The `pipelines` generally handle common tasks, like making sure a user is authorized to access a certain part of the site, or that a password is a proper length, or that user credentials get encrypted/stored properly.
       - You could get away with considering `pipelines` the 'data processing' step in your application, as a loose definition.
@@ -147,7 +147,32 @@
       - Let's brake these down as simply as possible:
 
         - `controller`: the beginning of our user experience, the doctor looks over your paperwork and takes note of the "why are you here?" field.
-        - `common_services`: very similar to the `pipelines` layer mentioned above, the doctor performs the routine check-up steps, say 'ahhh...'.
-        - `action`: finally, the thing the user is actually trying to do- make an account, view some data, make a comment, etc, the actual *act* itself happens at this step. To complete our doctors office analogy: perhaps you went to the doctors to get a prescription renewed, at this step, the doctor would confirm that you do indeed still need it, and write you the prescription.
+        - `common_services`: appropriately named- very similar to the `pipelines` layer mentioned above, here the doctor performs the routine check-up steps, say 'ahhh...'.
+        - `action`: finally, the thing the user is actually trying to do- make an account, view some data, make a comment, etc, the actual *act* itself happens at this step. To complete our doctors office analogy: perhaps you went to the doctors to get a prescription renewed, at this step, the doctor would confirm that you do indeed still need it, write you the prescription, and send it over to your pharmacy.
 
-      - `section on action here`
+      - There is usually a controller for each 'thing' in our program, they could be:
+
+        - a controller for user-focused tasks, which we'd call `UserController`, and it would handle things surrounding account management.
+        - a controller for tasks related to blog posts, which we could call `PostController`, and it would handle tasks such as updating/editing a post, deleting a post, creating a new post, etc.
+
+      - There will usually be more than one `action` per `controller`, specifically, each task we want to complete will have an individual action associated with it; if we are looking at our `UserController`, it would likely have:
+
+        - a `get` action, to get the information of a user.
+        - a `create` action, to create a new user account.
+        - an `update` action, to update a user's information.
+        - a `delete` action, to delete a user's account.
+
+      - The `action` is important, and it would be worthwhile to give it a closer look. If you are used to the MVC development pattern, you will start to see parts of it here. Let's crack open our `get` action -the action we would use to show a user-, it might look like:
+
+        ``` 
+        > connection
+          |> find_user()
+          |> view()
+          |> template()
+        ```
+        - So, what are these?
+        - `find_user`: we get the user's raw information from our database
+        - `view`: we filter and process that information into something that we can display, done via a combination of HTML and Embedded Elixir (Elixir code that can be immediately evaluated in an HTML file, like JavaScript)
+        - `template`: we render our `view` -which is just converted to raw HTML after it gets loaded- onto a larger HTML file (or *template*). 
+          - Where a  `view` just has the code pertaining to the information we're requesting, the `template` has everything else on the web page: header, nav-bar, footer, etc. 
+          - A `template` is persistent and doesn't change, it just has holes to put information from the `view` into. 
