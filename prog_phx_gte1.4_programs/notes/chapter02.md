@@ -10,7 +10,7 @@
 
 - When you search and go to a URL (which is translated to a web server's IP address), think of it as a *function call* to the `webserver` function.
 
-- The function takes input (your request) and generates a response.
+- The function takes input (your request) and generates a response; the response usually comes in the form of a webpage.
 
   - ```
     > webserver(request)
