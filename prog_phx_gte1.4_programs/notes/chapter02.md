@@ -59,9 +59,9 @@
       - What are you trying to do?
       - What information are you sending/bringing with you, if any?
       - Ect. Thankfully this is all done automatically for us as soon as a user accesses our web server.
-      - The `connection` struct itself is rather ugly and complicated, and thankfully we don't need to know about most of its dirty details, we usually only care about certain small sections. If you want to see what a general `connection` struct looks like, [click here](link_to_struct_gist).
+    - The `connection` struct itself is rather ugly and complicated, and thankfully we don't need to know about most of its dirty details, we usually only care about certain small sections. If you want to see what a general `connection` struct looks like, [click here](https://gist.github.com/jamonholmgren/fc3b995d2704b1780b55).
     - Each layer of Phoenix makes little changes to our `connection`, slowly honing it down to exactly what we want.
-    - By the end of the complete `phoenix` pipeline, our `connection` is transformed to the output we want, and this output is then either rendered to a webpage of our design, or it's used to update a database of ours, or both.
+    - By the end of the complete `phoenix` pipeline, our `connection` is transformed and used to create the output we want, and this output is then either rendered to a webpage of our design, or it's used to update a database of ours, or both.
 
   ### The Layers of Phoenix
 
@@ -117,9 +117,9 @@
 
     - What are the 'Pipelines'?
 
-      - As mentioned before, the `pipelines` layer is not as concrete as the others, where the `endpoint` `controller` and `router` are all in separate and distinct files, the `pipelines` are usually spread out and found in different files- as we just said, one or two may be found in the `router` file.
+      - `pipelines` is sort of arbitrarily placed in this list; as mentioned before, the `pipelines` layer is not as concrete as the others, where the `endpoint`, `controller`, and `router` are all in separate and distinct files, the `pipelines` are usually spread out and found in different files- as we just said, one or two may be found in the `router` file, for authenticating the user.
       - As for our doctors office, the `pipelines` layer can be considered all the steps taken in-between where staff make sure you're actually a patient of theirs, that you have your appointment scheduled properly, your billing information is correct, that you're seeing the right doctor, that your insurance info is all correct, are you up-to-date on your immunizations, etc.
-      - The `pipelines` generally handle common tasks, like making sure a user is authorized to access a certain part of the site, or that a password is a proper length, or that user credentials get encrypted/stored properly.
+      - The `pipelines` generally handle common tasks, like making sure a user is authorized to access a certain part of the site, or that a password is a proper length/format, or that user credentials get encrypted/stored properly.
       - You could get away with considering `pipelines` the 'data processing' step in your application, as a loose definition.
       - To emphasize: `pipelines` are still just normal functions and collections of functions like everything else, they aren't special in any way.
 
@@ -171,8 +171,10 @@
           |> template()
         ```
         - So, what are these?
-        - `find_user`: we get the user's raw information from our database
-        - `view`: we filter and process that information into something that we can display, done via a combination of HTML and Embedded Elixir (Elixir code that can be immediately evaluated in an HTML file, like JavaScript)
+        - `find_user`: we get the user's raw information from our database.
+        - `view`: we process that information into something that we can display, done via a combination of HTML and Embedded Elixir (Elixir code that can be immediately evaluated in an HTML file, like JavaScript).
         - `template`: we render our `view` -which is just converted to raw HTML after it gets loaded- onto a larger HTML file (or *template*). 
           - Where a  `view` just has the code pertaining to the information we're requesting, the `template` has everything else on the web page: header, nav-bar, footer, etc. 
-          - A `template` is persistent and doesn't change, it just has holes to put information from the `view` into. 
+          - A `template` is persistent and doesn't change, it just has holes to put code from the `view` into.
+          - Using a `template` makes life easier, as it lets us keep a consistent style, and it means that we don't need to create an entire new web-page from scratch for every different bit of information we want to show. Say we wanted to add a new item to our nav-bar, we would only need to do it once on our `template` and it will apply everywhere, instead of manually adding the new item on every possible existing web-page. 
+          - You may very well have more than one `template` per website, but the ratio of `template`'s to `view`'s should be very low.  
