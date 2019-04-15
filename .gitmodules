@@ -1,0 +1,3 @@
+[submodule "elixir_koans/elixir-koans"]
+	path = elixir_koans/elixir-koans
+	url = https://github.com/elixirkoans/elixir-koans.git
