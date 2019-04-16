@@ -14,12 +14,18 @@ defmodule RumblWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/manage", RumblWeb do
+    pipe_through [:browser, :authenticate_user]
+
+    resources "/videos", VideoController
+  end
+
   scope "/", RumblWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
     resources "/users", UserController, only: [:index, :show, :new, :create]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+    get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.
