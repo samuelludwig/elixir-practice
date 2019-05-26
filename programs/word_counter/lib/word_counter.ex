@@ -60,7 +60,7 @@ defmodule WordCounter do
   def sort_by_val(x) do
     x |> Map.to_list() |> Enum.sort_by(&elem(&1, 1), &>=/2)
   end
-
+  
   @doc ~S"""
   write_list(x, separator \\ ": ")
   Takes a list of two-value tuples and returns them as a string, with each
