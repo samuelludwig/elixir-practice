@@ -11,7 +11,7 @@ defmodule InfoSys.Application do
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: InfoSys.Supervisor]
+    opts = [strategy: :one_for_one, name: InfoSys.InfoSupervisor]
     Supervisor.start_link(children, opts)
   end
 end
