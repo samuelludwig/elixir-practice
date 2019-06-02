@@ -13,6 +13,9 @@ defmodule KV.Supervisor do
       {DynamicSupervisor,
         name: KV.BucketSupervisor,
         strategy: :one_for_one},
+
+      {Task.Supervisor,
+        name: KV.RouterTasks},
     ]
 
     Supervisor.init(children, strategy: :one_for_all)
