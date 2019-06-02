@@ -18,3 +18,6 @@ import_config "../apps/*/config/config.exs"
 #       level: :info,
 #       format: "$date $time [$level] $metadata$message\n",
 #       metadata: [:user_id]
+config :iex, default_prompt: ">>>"
+config :kv, :routing_table, [{?a..?m, :foo@SLPC},
+                             {?n..?z, :bar@SLT440S}]
