@@ -8,8 +8,10 @@ defmodule KVServer.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
 
-    port = String.to_integer(System.get_env("PORT") ||
-                             raise "missing $PORT environment variable")
+    # port = String.to_integer(System.get_env("PORT") ||
+    #                          raise "missing $PORT environment variable")
+
+    port = String.to_integer("4040")
 
     children = [
       {Task.Supervisor, name: KVServer.TaskSupervisor},
