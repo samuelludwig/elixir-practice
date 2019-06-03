@@ -41,6 +41,9 @@ defmodule LvTestdriveWeb do
       import LvTestdriveWeb.ErrorHelpers
       import LvTestdriveWeb.Gettext
       alias LvTestdriveWeb.Router.Helpers, as: Routes
+
+      # Import LiveView functionality
+      import Phoenix.LiveView, only: [live_render: 2, live_render: 3]
     end
   end
 
@@ -49,6 +52,7 @@ defmodule LvTestdriveWeb do
       use Phoenix.Router
       import Plug.Conn
       import Phoenix.Controller
+      import Phoenix.LiveView.Router
     end
   end
 

@@ -14,7 +14,10 @@ config :lv_testdrive_web, LvTestdriveWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "aok6Dpi9kOxP+CFmNH2TtIATujfai2wMDYbjng/AWJtShVD0qes43D4o0pk7r+Ft",
   render_errors: [view: LvTestdriveWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: LvTestdriveWeb.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: LvTestdriveWeb.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [
+    signing_salt: "f9vFHlnCfPB2WuJ7YB1pY0k7lE8MdMcTYSIO7mZ4v9HnfuH1zbAUAlsOKU72pp0t"
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

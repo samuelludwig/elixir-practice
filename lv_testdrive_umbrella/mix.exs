@@ -22,6 +22,8 @@ defmodule LvTestdrive.Umbrella.MixProject do
   # Dependencies listed here are available only for this project
   # and cannot be accessed from applications inside the apps folder
   defp deps do
-    []
+    [
+      {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"},
+    ]
   end
 end

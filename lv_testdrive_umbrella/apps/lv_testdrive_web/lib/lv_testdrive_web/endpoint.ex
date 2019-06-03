@@ -1,6 +1,8 @@
 defmodule LvTestdriveWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :lv_testdrive_web
 
+  socket "/live", Phoenix.LiveView.Socket
+
   socket "/socket", LvTestdriveWeb.UserSocket,
     websocket: true,
     longpoll: false

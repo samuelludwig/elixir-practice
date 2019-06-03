@@ -56,6 +56,7 @@ config :lv_testdrive_web, LvTestdriveWeb.Endpoint,
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
       ~r{lib/lv_testdrive_web/views/.*(ex)$},
-      ~r{lib/lv_testdrive_web/templates/.*(eex)$}
+      ~r{lib/lv_testdrive_web/templates/.*(eex)$},
+      ~r{lib/lv_testdrive_web/live/.*(ex)$}
     ]
   ]
