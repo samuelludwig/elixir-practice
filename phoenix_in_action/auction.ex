@@ -12,7 +12,7 @@ defmodule Auction do
   end
 
   def get_item_by(attrs) do
-	@repo.get_by(Items, attrs)
+	@repo.get_by(Item, attrs)
   end
 end
 
