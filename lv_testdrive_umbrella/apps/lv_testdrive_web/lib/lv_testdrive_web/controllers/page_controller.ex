@@ -3,6 +3,6 @@ defmodule LvTestdriveWeb.PageController do
   alias Phoenix.LiveView
 
   def index(conn, _params) do
-    LiveView.Controller.live_render(conn, LvTestdriveWeb.GithubDeployView, session: %{})
+    LiveView.Controller.live_render(conn, LvTestdriveWeb.GitubDeployView, session: %{})
   end
 end
