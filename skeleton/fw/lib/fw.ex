@@ -1,6 +1,6 @@
-defmodule NervesSkeleton do
+defmodule Fw do
   @moduledoc """
-  Documentation for NervesSkeleton.
+  Documentation for Fw.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule NervesSkeleton do
 
   ## Examples
 
-      iex> NervesSkeleton.hello()
+      iex> Fw.hello
       :world
 
   """
