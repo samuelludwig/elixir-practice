@@ -4,9 +4,9 @@ defmodule Auction.Item do
   import Ecto.Changeset
 
   schema "items" do
-    field :title, :string
-    field :description, :string
-    field :ends_at, :utc_datetime
+    field(:title, :string)
+    field(:description, :string)
+    field(:ends_at, :utc_datetime)
     timestamps()
   end
 
@@ -25,5 +25,4 @@ defmodule Auction.Item do
       _ -> []
     end
   end
-
 end
