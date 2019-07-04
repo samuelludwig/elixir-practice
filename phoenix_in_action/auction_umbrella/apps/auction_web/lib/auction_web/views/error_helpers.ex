@@ -1,4 +1,4 @@
- defmodule AuctionWeb.ErrorHelpers do
+defmodule AuctionWeb.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """

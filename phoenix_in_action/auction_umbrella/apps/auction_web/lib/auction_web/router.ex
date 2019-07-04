@@ -27,15 +27,15 @@ defmodule AuctionWeb.Router do
         :create,
         :edit,
         :update
-      ]
+      ] do
+      resources "/bids", BidController, only: [:create]
+    end
 
     resources "/users", UserController, only: [:show, :new, :create]
 
     get "/login", SessionController, :new
     post "/login", SessionController, :create
     delete "/logout", SessionController, :delete
-
-    resources "/bids", BidController, only: [:new, :create, :show]
   end
 
   # Other scopes may use custom stacks.
