@@ -64,9 +64,14 @@ defmodule Auction do
   def new_bid(), do: Bid.changeset(%Bid{})
 
   def insert_bid(params) do
-    %Bid{}
-    |> Bid.changeset(params)
-    |> @repo.insert()
+    current_highest_bid = get_highest_bid_for_item(params.item_id).amount
+    bid = Bid.changeset(%Bid{}, params)
+
+    if params.amount > current_highest_bid do
+      @repo.insert(bid)
+    else
+      {:error, bid}
+    end
   end
 
   def get_item_with_bids(id) do
@@ -87,12 +92,16 @@ defmodule Auction do
   end
 
   def get_highest_bid_for_item(id) do
-    query =
-      from b in Bid,
-      where: b.item_id == ^id,
-      order_by: [desc: :amount],
-      limit: 1
+    if get_item_with_bids(id).bids == [] do
+      %{amount: 0}
+    else
+      query =
+        from b in Bid,
+        where: b.item_id == ^id,
+        order_by: [desc: :amount],
+        limit: 1
 
-    @repo.all(query)
+      @repo.one(query)
+    end
   end
 end
