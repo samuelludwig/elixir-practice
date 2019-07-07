@@ -67,7 +67,7 @@ defmodule Auction do
     current_highest_bid = get_highest_bid_for_item(params.item_id).amount
     bid = Bid.changeset(%Bid{}, params)
 
-    if params.amount > current_highest_bid do
+    if params.amount != "" && String.to_integer(params.amount) > current_highest_bid do
       @repo.insert(bid)
     else
       {:error, bid}
